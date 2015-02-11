@@ -1,6 +1,10 @@
 naw
 ===
 
+Install:
+
+    sudo python setup.py
+
 Phone book for Nelen & Schuurmans. You can use it like this:
 
     naw verk
