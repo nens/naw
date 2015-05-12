@@ -1,11 +1,24 @@
-#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
-import os
-import naw
+from setuptools import setup
 
-def main ():
-    absfile = naw.__file__.replace('pyc', 'py')
-    os.symlink(absfile, '/usr/local/bin/naw')
+name = 'naw'
+version = '0.1'
 
-if __name__ == '__main__':
-    main()
+install_requires = [
+    'setuptools',
+]
+
+setup(
+    name=name,
+    version=version,
+    url='',
+    author='Arjan Verkerk',
+    author_email='arjan.verkerk@nelen-schuurmans.com',
+    packages=['naw'],
+    zip_safe=False,
+    install_requires=install_requires,
+    entry_points={'console_scripts': [
+        'naw = naw.naw:main'
+    ]},
+)
