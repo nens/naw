@@ -46,6 +46,8 @@ def main():
             presence = RED.format('niet')
         elif elem['in_drieharingen']:
             presence = GREEN.format('Driehari')
+        elif elem['in_vinkenburg']:
+            presence = GREEN.format('Vinkenbu')
         else:
             presence = GREEN.format('Zakkendr')
         elem.update(SHORTNAME=elem['NAAM'][:30])
