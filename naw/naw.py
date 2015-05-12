@@ -44,9 +44,9 @@ def main():
     for elem in data:
         if not elem.get('in_office'):
             presence = RED.format('niet')
-        elif elem['in_drieharingen']:
+        elif elem.get('in_drieharingen', False):
             presence = GREEN.format('Driehari')
-        elif elem['in_vinkenburg']:
+        elif elem.get('in_vinkenburg', False):
             presence = GREEN.format('Vinkenbu')
         else:
             presence = GREEN.format('Zakkendr')
