@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
@@ -10,6 +9,7 @@ import json
 import urllib2
 import sys
 import re
+
 
 def main():
     if sys.platform.startswith('win'):
@@ -57,6 +57,3 @@ def main():
             print(elem)
         if re.search(pattern, text, flags=re.IGNORECASE):
             print(text)
-
-if __name__ == '__main__':
-    main()
