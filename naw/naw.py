@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
@@ -10,6 +9,7 @@ import json
 import urllib2
 import sys
 import re
+
 
 def main():
     if sys.platform.startswith('win'):
@@ -44,8 +44,10 @@ def main():
     for elem in data:
         if not elem.get('in_office'):
             presence = RED.format('niet')
-        elif elem['in_drieharingen']:
+        elif elem.get('in_drieharingen', False):
             presence = GREEN.format('Driehari')
+        elif elem.get('in_vinkenburg', False):
+            presence = GREEN.format('Vinkenbu')
         else:
             presence = GREEN.format('Zakkendr')
         elem.update(SHORTNAME=elem['NAAM'][:30])
@@ -57,6 +59,3 @@ def main():
             print(elem)
         if re.search(pattern, text, flags=re.IGNORECASE):
             print(text)
-
-if __name__ == '__main__':
-    main()
