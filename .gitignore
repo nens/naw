@@ -1,1 +1,7 @@
-*.pyc
+*.py[cod]
+
+# C extensions
+*.so
+
+# Packages
+*.egg-info
