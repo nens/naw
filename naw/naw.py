@@ -6,9 +6,13 @@ from __future__ import absolute_import
 from __future__ import division
 
 import json
-import urllib2
 import sys
 import re
+
+try:
+    from urllib import request
+except ImportError:
+    import urllib2 as request
 
 
 def main():
@@ -21,11 +25,13 @@ def main():
 
     TEMPLATE = '{SHORTNAME:<32}{SHORTNUMBER:>12}{MOBIEL:>13}  {PRESENCE:<20}'
 
-    jsonfile = urllib2.urlopen(
+    url_file = request.urlopen(
         'http://buildbot.lizardsystem.nl/gis/aanwezigheid.json',
     )
-    data = json.load(jsonfile)
-    jsonfile.close()
+    json_str = url_file.read().decode('utf-8')
+    url_file.close()
+
+    data = json.loads(json_str)
 
     try:
         pattern = sys.argv[1]
