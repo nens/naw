@@ -54,7 +54,7 @@ def print_phone_number(pattern, data):
             print(text)
 
 
-def set_telephone(data, pattern):
+def set_telephone(pattern, data):
     for elem in data:
         name = elem["NAAM"]
         if re.search(pattern, name, flags=re.IGNORECASE):
@@ -81,7 +81,7 @@ def set_telephone(data, pattern):
 
 def main():
     url_file = request.urlopen(
-        'http://buildbot.lizardsystem.nl/gis/aanwezigheid.json',
+        'http://buildbot.lizardsystem.nl/gis/aanwezigheid.json'
     )
     json_str = url_file.read().decode('utf-8')
     url_file.close()
@@ -91,7 +91,7 @@ def main():
     try:
         pattern = sys.argv[1]
         if pattern == '--set-telephone':
-            set_telephone(data, sys.argv[2])
+            set_telephone(sys.argv[2], data)
         elif pattern == '--help':
             print('''
 USAGE: naw [NAME]
