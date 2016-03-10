@@ -58,14 +58,23 @@ def set_telephone(pattern, data):
     for elem in data:
         name = elem["NAAM"]
         if re.search(pattern, name, flags=re.IGNORECASE):
-            number = raw_input("Type the new number for {}: \n".format(
-                name)
+            number_prompt_text = "Type the new number for {}: \n".format(name)
+
+            try:
+                number = raw_input(number_prompt_text)
+            except NameError:
+                number = input(number_prompt_text)
+
+            confirm_text = "Change the number for {} to {}? [y/N]:\n".format(
+                name,
+                number
             )
 
-            confirm = raw_input(
-                "Change the number for {} to {}? [y/N]:\n".format(
-                    name, number
-                ))
+            try:
+                confirm = raw_input(confirm_text)
+            except NameError:
+                confirm = input(confirm_text)
+
             if confirm == 'y':
                 change_url = request.urlopen((
                     'http://buildbot.lizardsystem.nl/cgi-bin/'
