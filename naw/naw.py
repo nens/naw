@@ -15,7 +15,7 @@ except ImportError:
     import urllib2 as request
 
 
-def main():
+def print_phone_number(pattern, data):
     if sys.platform.startswith('win'):
         GREEN = '{}'
         RED = '{}'
@@ -24,19 +24,6 @@ def main():
         RED = '\x1b[1m\x1b[31m{}\x1b(B\x1b[m'
 
     TEMPLATE = '{SHORTNAME:<32}{SHORTNUMBER:>12}{MOBIEL:>13}  {PRESENCE:<20}'
-
-    url_file = request.urlopen(
-        'http://buildbot.lizardsystem.nl/gis/aanwezigheid.json',
-    )
-    json_str = url_file.read().decode('utf-8')
-    url_file.close()
-
-    data = json.loads(json_str)
-
-    try:
-        pattern = sys.argv[1]
-    except IndexError:
-        pattern = ''
 
     print(' --- Gericht overnemen: *59 / '
           'Prefix interne nummers: 030 2330 --- ')
@@ -65,3 +52,64 @@ def main():
             print(elem)
         if re.search(pattern, text, flags=re.IGNORECASE):
             print(text)
+
+
+def set_telephone(pattern, data):
+    for elem in data:
+        name = elem["NAAM"]
+        if re.search(pattern, name, flags=re.IGNORECASE):
+            number_prompt_text = "Type the new number for {}: \n".format(name)
+
+            try:
+                number = raw_input(number_prompt_text)
+            except NameError:
+                number = input(number_prompt_text)
+
+            confirm_text = "Change the number for {} to {}? [y/N]:\n".format(
+                name,
+                number
+            )
+
+            try:
+                confirm = raw_input(confirm_text)
+            except NameError:
+                confirm = input(confirm_text)
+
+            if confirm == 'y':
+                change_url = request.urlopen((
+                    'http://buildbot.lizardsystem.nl/cgi-bin/'
+                    'set_telephone?id={}&number={}'.format(
+                        elem['id'],
+                        number
+                    )))
+                print(change_url.read().decode('utf-8'))
+                change_url.close()
+            else:
+                print('Changing nothing for nobody')
+
+
+def main():
+    url_file = request.urlopen(
+        'http://buildbot.lizardsystem.nl/gis/aanwezigheid.json'
+    )
+    json_str = url_file.read().decode('utf-8')
+    url_file.close()
+
+    data = json.loads(json_str)
+
+    try:
+        first_argument = sys.argv[1]
+        if first_argument == '--set-telephone':
+            set_telephone(sys.argv[2], data)
+        elif first_argument == '--help':
+            print('''
+USAGE: naw [NAME]
+
+OPTIONS:
+--set-telephone NAME -- Changes the phone number
+            ''')
+        else:
+            pattern = first_argument
+            print_phone_number(pattern, data)
+    except IndexError:
+        print_phone_number('', data)
