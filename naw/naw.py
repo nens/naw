@@ -89,10 +89,10 @@ def main():
     data = json.loads(json_str)
 
     try:
-        pattern = sys.argv[1]
-        if pattern == '--set-telephone':
+        first_argument = sys.argv[1]
+        if first_argument == '--set-telephone':
             set_telephone(sys.argv[2], data)
-        elif pattern == '--help':
+        elif first_argument == '--help':
             print('''
 USAGE: naw [NAME]
 
@@ -100,6 +100,7 @@ OPTIONS:
 --set-telephone NAME -- Changes the phone number
             ''')
         else:
+            pattern = first_argument
             print_phone_number(pattern, data)
     except IndexError:
         print_phone_number('', data)
