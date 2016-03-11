@@ -116,7 +116,10 @@ def naw(pattern, telephone, yes):
 def get_parser():
     """ Return argument parser. """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('pattern', metavar='PATTERN')
+    parser.add_argument('pattern',
+                        nargs='?',
+                        default='',
+                        metavar='PATTERN')
     parser.add_argument('-s', '--set-telephone',
                         dest='telephone',
                         help='Change the phone number')
