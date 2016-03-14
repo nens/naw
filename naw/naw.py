@@ -109,8 +109,8 @@ def naw(pattern, telephone, yes):
     if telephone:
         set_telephone(data=data, pattern=pattern,
                       telephone=telephone, yes=yes)
-        return
-    print_phone_number(data=data, pattern=pattern)
+    else:
+        print_phone_number(data=data, pattern=pattern)
 
 
 def get_parser():
