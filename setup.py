@@ -7,6 +7,7 @@ version = '0.1'
 
 install_requires = [
     'setuptools',
+    'six',
 ]
 
 setup(
