@@ -21,7 +21,7 @@ except ImportError:
 try:
     from urllib.parse import urlencode
 except ImportError:
-    from urllib2 import urlencode
+    from urllib import urlencode
 
 if sys.platform.startswith('win'):
     GREEN = '{}'
