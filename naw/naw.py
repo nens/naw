@@ -82,7 +82,7 @@ def set_telephone(data, pattern, telephone, yes):
         except NameError:
             response = input(confirm_message)
 
-        confirmed = response == 'y'
+        confirmed = (response == 'y')
 
     if match and confirmed:
         url = 'http://buildbot.lizardsystem.nl/cgi-bin/set_telephone'
