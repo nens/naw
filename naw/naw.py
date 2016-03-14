@@ -7,21 +7,14 @@ from __future__ import print_function
 from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import division
+from six.moves.urllib.parse import urlencode
+from six.moves.urllib import request
 
 import argparse
 import json
 import sys
 import re
 
-try:
-    from urllib import request
-except ImportError:
-    import urllib2 as request
-
-try:
-    from urllib.parse import urlencode
-except ImportError:
-    from urllib import urlencode
 
 if sys.platform.startswith('win'):
     GREEN = '{}'
