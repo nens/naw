@@ -49,6 +49,7 @@ def print_phone_number(data, pattern):
         elem.update(SHORTNAME=elem['NAAM'][:30])
         elem.update(SHORTNUMBER=elem['number'][:10])
         elem.update(PRESENCE=presence)
+        elem.update(MOBIEL=elem.get('MOBIEL', '').replace(' ', ''))
         try:
             text = TEMPLATE.format(**elem)
         except KeyError:
