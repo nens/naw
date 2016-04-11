@@ -24,37 +24,52 @@ else:
     RED = '\x1b[1m\x1b[31m{}\x1b(B\x1b[m'
 
 
+def colorize(text):
+    if sys.platform.startswith('win'):
+        return text
+    return text.replace(
+        'Zakkendragershof', GREEN.format('Zakkendragershof'),
+    ).replace(
+        'Vinkenburg', GREEN.format('Vinkenburg'),
+    ).replace(
+        'Afwezig', RED.format('Afwezig'),
+    )
+
+
 def print_phone_number(data, pattern):
+    """ Print formatted list of entries. """
 
-    TEMPLATE = '{SHORTNAME:<32}{SHORTNUMBER:>12}{MOBIEL:>13}  {PRESENCE:<20}'
+    TEMPLATE = ('{NAME:<23}   '
+                '{SHORTNUMBER:>16}   {MOBIEL:>16}   {PRESENCE:^16}')
 
-    print(' --- Gericht overnemen: *59 / '
-          'Prefix interne nummers: 030 2330 --- ')
-    print(TEMPLATE.format(SHORTNAME='Naam',
+    print(TEMPLATE.format(NAME='Naam',
                           SHORTNUMBER='Intern',
                           MOBIEL='Mobiel',
-                          PRESENCE='Aanwezig?'))
+                          PRESENCE='Waar?'))
 
-    print(68 * '-')
-
-    for elem in data:
+    print(80 * '-')
+    for elem in sorted(data, key=lambda d: d['NAAM']):
+        # whereabouts
         if not elem.get('in_office'):
-            presence = RED.format('niet')
-        elif elem.get('in_drieharingen', False):
-            presence = GREEN.format('Driehari')
-        elif elem.get('in_vinkenburg', False):
-            presence = GREEN.format('Vinkenbu')
+            presence = 'Afwezig'
+        elif elem.get('in_vinkenburg',  False):
+            presence = 'Vinkenburg'
         else:
-            presence = GREEN.format('Zakkendr')
-        elem.update(SHORTNAME=elem['NAAM'][:30])
-        elem.update(SHORTNUMBER=elem['number'][:10])
+            presence = 'Zakkendragershof'
         elem.update(PRESENCE=presence)
-        try:
-            text = TEMPLATE.format(**elem)
-        except KeyError:
-            print(elem)
+
+        # impose width limits
+        elem.update(NAME=elem['NAAM'][:23])
+        elem.update(SHORTNUMBER=elem['number'][:16])
+
+        text = TEMPLATE.format(**elem)
         if re.search(pattern, text, flags=re.IGNORECASE):
-            print(text)
+
+            # add colors after formatting, or it hinders justification
+            print(colorize(text))
+
+    print('-------- Gericht overnemen: *59 '
+          '------ Prefix interne nummers: 030 2330 --------')
 
 
 def set_telephone(data, pattern, telephone, yes):
