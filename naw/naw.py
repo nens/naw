@@ -39,16 +39,16 @@ def colorize(text):
 def print_phone_number(data, pattern):
     """ Print formatted list of entries. """
 
-    TEMPLATE = ('{SHORTNAME:<23}   '
+    TEMPLATE = ('{NAME:<23}   '
                 '{SHORTNUMBER:>16}   {MOBIEL:>16}   {PRESENCE:^16}')
 
-    print(TEMPLATE.format(SHORTNAME='Naam',
+    print(TEMPLATE.format(NAME='Naam',
                           SHORTNUMBER='Intern',
                           MOBIEL='Mobiel',
                           PRESENCE='Waar?'))
 
     print(80 * '-')
-    for elem in data:
+    for elem in sorted(data, key=lambda d: d['NAAM']):
         # whereabouts
         if not elem.get('in_office'):
             presence = 'Afwezig'
@@ -59,7 +59,7 @@ def print_phone_number(data, pattern):
         elem.update(PRESENCE=presence)
 
         # impose width limits
-        elem.update(SHORTNAME=elem['NAAM'][:23])
+        elem.update(NAME=elem['NAAM'][:23])
         elem.update(SHORTNUMBER=elem['number'][:16])
 
         text = TEMPLATE.format(**elem)
