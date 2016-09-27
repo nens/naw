@@ -93,7 +93,7 @@ def set_telephone(data, pattern, telephone, yes):
         confirmed = (response == 'y')
 
     if match and confirmed:
-        url = 'http://buildbot.lizardsystem.nl/cgi-bin/set_telephone'
+        url = 'http://monitor.nelen-schuurmans.nl/cgi-bin/set_telephone'
         query_dict = {'id': elem['id'], 'number': telephone}
         query_string = urlencode(query_dict).encode('ascii')
         url_file = request.urlopen(url, query_string)
@@ -107,7 +107,7 @@ def set_telephone(data, pattern, telephone, yes):
 
 
 def naw(pattern, telephone, yes):
-    url = 'http://buildbot.lizardsystem.nl/gis/aanwezigheid.json'
+    url = 'http://monitor.nelen-schuurmans.nl/aanwezigheid/aanwezigheid.json'
     url_file = request.urlopen(url)
     json_str = url_file.read().decode('utf-8')
     url_file.close()
