@@ -1,14 +1,18 @@
 naw
 ===
 
-Install:
-    
-    git clone https://github.com/nens/naw/
-    cd naw
-    sudo python setup.py install
+Commandline access to the Nelen & Schuurmans phonebook.
 
-Phone book for Nelen & Schuurmans. You can use it like this:
+Install
+-------
 
-    naw verk
-    naw Arjan
-    naw arj
+  $ git clone https://github.com/nens/naw/
+  $ cd naw
+  $ sudo python setup.py install
+
+Usage
+-----
+  
+  $ naw --help
+  $ naw verk
+  $ naw verk --assume-yes --set-telephone 123
