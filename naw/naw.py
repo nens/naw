@@ -93,7 +93,7 @@ def set_telephone(data, pattern, telephone, yes):
         confirmed = (response == 'y')
 
     if match and confirmed:
-        url = 'http://monitor.nelen-schuurmans.nl/cgi-bin/set_telephone'
+        url = 'https://monitor.nelen-schuurmans.nl/cgi-bin/set_telephone'
         query_dict = {'id': elem['id'], 'number': telephone}
         query_string = urlencode(query_dict).encode('ascii')
         url_file = request.urlopen(url, query_string)
