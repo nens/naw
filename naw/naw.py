@@ -68,8 +68,8 @@ def print_phone_number(data, pattern):
             # add colors after formatting, or it hinders justification
             print(colorize(text))
 
-    print('-------- Gericht overnemen: *59 '
-          '------ Prefix interne nummers: 030 2330 --------')
+    print('------ Overnemen binnen groep: #98 '
+          '----- Prefix interne nummers: 030 2330 ------')
 
 
 def set_telephone(data, pattern, telephone, yes):
