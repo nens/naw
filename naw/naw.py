@@ -39,16 +39,16 @@ def colorize(text):
 def print_phone_number(data, pattern):
     """ Print formatted list of entries. """
 
-    TEMPLATE = ('{NAME:<23}   '
-                '{SHORTNUMBER:>16}   {MOBIEL:>16}   {PRESENCE:^16}')
+    TEMPLATE = ('{naam:<23}   '
+                '{number:>16}   {mobiel:>16}   {presence:^16}')
 
-    print(TEMPLATE.format(NAME='Naam',
-                          SHORTNUMBER='Intern',
-                          MOBIEL='Mobiel',
-                          PRESENCE='Waar?'))
+    print(TEMPLATE.format(naam='Naam',
+                          number='Intern',
+                          mobiel='Mobiel',
+                          presence='Waar?'))
 
     print(80 * '-')
-    for elem in sorted(data, key=lambda d: d['NAAM']):
+    for elem in sorted(data, key=lambda d: d['naam']):
         # whereabouts
         if not elem.get('in_office'):
             presence = 'Afwezig'
@@ -56,11 +56,11 @@ def print_phone_number(data, pattern):
             presence = 'Vinkenburg'
         else:
             presence = 'Zakkendragershof'
-        elem.update(PRESENCE=presence)
+        elem.update(presence=presence)
 
         # impose width limits
-        elem.update(NAME=elem['NAAM'][:23])
-        elem.update(SHORTNUMBER=elem['number'][:16])
+        elem.update(naam=elem['naam'][:23])
+        elem.update(number=elem['number'][:16])
 
         text = TEMPLATE.format(**elem)
         if re.search(pattern, text, flags=re.IGNORECASE):
@@ -75,7 +75,7 @@ def print_phone_number(data, pattern):
 def set_telephone(data, pattern, telephone, yes):
     "Set telephone for the first record where the name field matches pattern."
     for elem in data:
-        name = elem["NAAM"]
+        name = elem["naam"]
         match = re.search(pattern, name, flags=re.IGNORECASE)
         if match:
             break
